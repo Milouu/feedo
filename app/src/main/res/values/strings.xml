@@ -3,4 +3,21 @@
     <string name="welcome_profil">Bonjour</string>
     <string name="categories">Catégories</string>
     <string name="category1">Féculents</string>
+    <string name="congrats_text">Well done, you are connected</string>
+    <string name="sign_out_button">Log Out</string>
+    <string name="default_web_client_id">138985818272-9p3qk5074elosntno16o1es6eaqjrbe6.apps.googleusercontent.com
+    </string>
+    <string name="bonjour">Bonjour</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="poids">Poids</string>
+    <string name="taille">Taille</string>
+    <string name="days">5 jours</string>
+    <string name="objectif">Objectif :</string>
+    <string name="Depuis">Commencé depuis:</string>
+    <string name="liste">Vos listes sont saines à :</string>
+    <string name="pourcentage">89%</string>
+    <string name="nbr_aliments">Nombre d\'aliments depuis 12jours :</string>
+    <string name="aliments_nbr">32</string>
+    <string name="favoris">Votre produit favoris :</string>
 </resources>
