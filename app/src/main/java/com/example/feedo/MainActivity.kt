@@ -6,6 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -15,88 +19,161 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_form.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val RC_SIGN_IN: Int = 1
-    lateinit var mGoogleSignInClient: GoogleSignInClient
-    lateinit var mGoogleSignInOptions: GoogleSignInOptions
 
-    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var spinnerGender: Spinner
+    private lateinit var spinnerSport: Spinner
+    private lateinit var spinnerObjectif: Spinner
+    lateinit var genderResult: String
+    lateinit var sportResult: String
+    lateinit var objectifResult: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        configureGoogleSignIn()
-        setupUI()
-        firebaseAuth = FirebaseAuth.getInstance()
-    }
+
 
     companion object {
-        fun getLaunchIntent(from: Context) = Intent(from, MainActivity::class.java).apply {
+        fun getLaunchIntent(from: Context) = Intent(from, FormActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            startActivity(FormActivity.getLaunchIntent(this))
-            finish()
-        }
-    }
 
-    private fun configureGoogleSignIn() {
-        mGoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions)
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_form)
 
-    private fun setupUI() {
-        google_button.setOnClickListener {
-            signIn()
-        }
-    }
 
-    private fun signIn() {
-        val signInIntent: Intent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
+        //  editWeight = findViewById(R.id.editWeight)
+        // buttonSend= findViewById(R.id.buttonSendValue)
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                if (account != null) {
-                    this.firebaseAuthWithGoogle(account)
-                } else {
-                    Toast.makeText(this, "Object null :'(", Toast.LENGTH_LONG).show()
-                }
 
-            } catch (e: ApiException) {
-                Toast.makeText(this, "Google sign in failed :'(", Toast.LENGTH_LONG).show()
-                e.printStackTrace()
+
+
+
+        //spinnerGender
+
+        spinnerGender = findViewById(R.id.spinnerGender) as Spinner
+        val genders = arrayOf("Femme", "Homme")
+
+        spinnerGender.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,genders)
+
+        spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                genderResult = genders.get(position)
             }
         }
-    }
 
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful) {
 
-                startActivity(FormActivity.getLaunchIntent(this))
-            } else {
-                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
+        //spinnerSport
+
+        spinnerSport = findViewById(R.id.spinnerSport) as Spinner
+        val frequences = arrayOf("1","2","3","4","5")
+
+        spinnerSport.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,frequences)
+
+        spinnerSport.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                sportResult = frequences.get(position)
             }
         }
+
+        //spinnerObjectif
+
+        spinnerObjectif = findViewById(R.id.spinnerObjectif) as Spinner
+        val objectifs = arrayOf("Perdre du poids","Prendre de la masse")
+
+        spinnerObjectif.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,objectifs)
+
+        spinnerObjectif.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                objectifResult = objectifs.get(position)
+            }
+        }
+
+
+        buttonSend.setOnClickListener{
+            saveValue()
+
+        }
+
+        //myRef.setValue("Hello, World!")
     }
+
+    private fun saveValue(){
+        //name
+        val name = editName.text.toString().trim()
+        if (name.isEmpty()){
+            editName.error = "Please enter a name"
+            return
+        }
+
+        // weight
+        val valueWeight = editWeight.text.toString().trim()
+        val weight = Integer.parseInt(valueWeight)
+        if (weight.equals("")){
+            editWeight.error = "Please enter a Weight"
+            return
+        }
+
+        //age
+        val valueAge = editAge.text.toString().trim()
+        val age = Integer.parseInt(valueAge)
+
+        if (age.equals("")){
+            editAge.error = "Please enter an age"
+            return
+        }
+
+
+        //size
+        val valueSize = editSize.text.toString().trim()
+        val size = Integer.parseInt(valueSize)
+
+        if (size.equals("")){
+            editSize.error = "Please enter an Size"
+            return
+        }
+
+        val genderResult1 = genderResult
+        val sportResult1 = Integer.parseInt(sportResult)
+
+        // Write a message to the database
+        val ref = FirebaseDatabase.getInstance().getReference("Profils")
+        // use when Google Auth is Working !!!!!!!!!!!!!!!!!
+       // val profilId = FirebaseAuth.getInstance().currentUser?.uid ?: ref.push().key
+        val profilId = "googleId"
+
+        val currentProfil = Profil(name, weight,age,genderResult1,sportResult1,objectifResult,size,profilId)
+
+        ref.child("googleId").setValue(currentProfil).addOnCompleteListener {
+            Toast.makeText(applicationContext, "profil saved", Toast.LENGTH_LONG).show()
+
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
+
+
+    }
+
+
+
+
 }
 
 

@@ -42,7 +42,7 @@ class FormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form)
-        setupUI()
+        //setupUI()
 
       //  editWeight = findViewById(R.id.editWeight)
        // buttonSend= findViewById(R.id.buttonSendValue)
@@ -168,16 +168,7 @@ class FormActivity : AppCompatActivity() {
 
 
 
-    private fun setupUI() {
-        sign_out_button.setOnClickListener {
-            signOut()
-        }
-    }
 
-    private fun signOut() {
-        startActivity(MainActivity.getLaunchIntent(this))
-        FirebaseAuth.getInstance().signOut();
-    }
 
 
 }
