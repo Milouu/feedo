@@ -1,9 +1,11 @@
 package com.example.feedo
 
+import android.app.Activity
 import android.nfc.Tag
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -17,7 +19,7 @@ import com.google.firebase.database.ValueEventListener
 
 
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : Activity() {
 
    // lateinit var ref : DatabaseReference
    // lateinit var profilId : String
@@ -25,6 +27,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_profile)
 
         readInDatabase()
@@ -36,7 +39,8 @@ class ProfileActivity : AppCompatActivity() {
     private fun readInDatabase() {
 
         val ref = FirebaseDatabase.getInstance().reference
-        val profilId = FirebaseAuth.getInstance().currentUser!!.uid
+      //  val profilId = FirebaseAuth.getInstance().currentUser!!.uid
+        val profilId = "googleId"
         val refUid = ref.child("Profils").child(profilId)
 
 

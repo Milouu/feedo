@@ -6,4 +6,5 @@
     <color name="textColor">#ffffff</color>
     <color name="appBlue">#6877FF</color>
     <color name="appOrange">#FD7A5D</color>
+    <color name="appGrey">#828282</color>
 </resources>
