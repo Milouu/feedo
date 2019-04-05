@@ -21,6 +21,9 @@ public class Product {
     @SerializedName("brands_tags")
     @Expose
     private List<String> brands = new ArrayList<String>();
+    @SerializedName("quantity")
+    @Expose
+    private String quantity;
 
     public String getImage_url() {
         return image_url;
@@ -53,4 +56,8 @@ public class Product {
     public void setBrands(List<String> brands) {
         this.brands = brands;
     }
+
+    public String getQuantity() { return quantity; }
+
+    public void setQuantity(String quantity) { this.quantity = quantity; }
 }
