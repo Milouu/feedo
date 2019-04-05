@@ -3,10 +3,16 @@
     <string name="welcome_profil">Bonjour</string>
     <string name="categories">Catégories</string>
     <string name="category1">Féculents</string>
+    <string name="category2">Viandes</string>
+    <string name="category3">Légumes</string>
+    <string name="category4">Pain</string>
+    <string name="category5">Boissons</string>
+    <string name="category6">Gâteaux</string>
+
+
     <string name="congrats_text">Well done, you are connected</string>
     <string name="sign_out_button">Log Out</string>
-    <string name="default_web_client_id">138985818272-ck6984i9dqo5b2dbkl49b251ielogutu.apps.googleusercontent.com
-    </string>
+    <string name="default_web_client_id">138985818272-ck6984i9dqo5b2dbkl49b251ielogutu.apps.googleusercontent.com</string>
     <string name="bonjour">Bonjour</string>
     <string name="name">Name</string>
     <string name="age">Age</string>
