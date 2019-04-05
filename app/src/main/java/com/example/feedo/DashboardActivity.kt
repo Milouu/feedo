@@ -32,6 +32,7 @@ class DashboardActivity : Activity(), View.OnClickListener {
     override fun onClick(view: View?) {
         val intent = Intent(this, ProfileActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     private fun readInDatabase() {

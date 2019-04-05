@@ -1,10 +1,12 @@
 package com.example.feedo
 
 import android.app.Activity
+import android.content.Intent
 import android.nfc.Tag
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
@@ -19,7 +21,7 @@ import com.google.firebase.database.ValueEventListener
 
 
 
-class ProfileActivity : Activity() {
+class ProfileActivity : Activity(), View.OnClickListener {
 
    // lateinit var ref : DatabaseReference
    // lateinit var profilId : String
@@ -32,8 +34,15 @@ class ProfileActivity : Activity() {
 
         readInDatabase()
 
+        val profil =  findViewById<View>(R.id.toprect)
+        profil.setOnClickListener(this)
     }
 
+    override fun onClick(view: View?) {
+        val intent = Intent(this, DashboardActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
 
 
     private fun readInDatabase() {
