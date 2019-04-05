@@ -3,28 +3,31 @@ package com.example.feedo.modelApi;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class OffWrapper {
 
-    @SerializedName("code")
+    @SerializedName("count")
     @Expose
-    private Double code;
-    @SerializedName("product")
+    private Double count;
+    @SerializedName("products")
     @Expose
-    private Product product;
+    private List<Product> products = new ArrayList<Product>();
 
-    public Double getCode() {
-        return code;
+    public Double getCount() {
+        return count;
     }
 
-    public void setCode(Double code) {
-        this.code = code;
+    public void setCount(Double count) {
+        this.count = count;
     }
 
-    public Product getProduct() {
-        return product;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

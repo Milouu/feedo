@@ -19,16 +19,16 @@ class SingleProductActivity : AppCompatActivity() {
 
         val offClient = OffClient()
 
-        val productId = 3029330003533
+        val productCat = "riz"
 
-        val request = offClient.api.getProductById(productId)
+        val request = offClient.api.getProductByCategory(productCat)
         request.enqueue(object : Callback<OffWrapper> {
 
             override fun onResponse(call: Call<OffWrapper>, response: Response<OffWrapper>) {
                 if(response.isSuccessful) {
                     val wrapper = response.body()!!
                     Log.d("PRODUCT_NAME", "WORKS")
-                    productName.text = "${wrapper.product.generic_name_fr}"
+                    productName.text = "${wrapper.products[0].generic_name_fr}"
                 } else {
                     Toast.makeText(this@SingleProductActivity, "HTTP CODE ${response.code()}", Toast.LENGTH_SHORT).show()
                 }

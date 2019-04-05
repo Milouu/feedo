@@ -27,12 +27,26 @@ class DashboardActivity : Activity(), View.OnClickListener {
 
         val profil = findViewById<LinearLayout>(R.id.profil)
         profil.setOnClickListener(this)
+
+        val feculent = findViewById<LinearLayout>(R.id.feculent)
+        feculent.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
-        val intent = Intent(this, ProfileActivity::class.java)
-        startActivity(intent)
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        when(view?.id){
+            R.id.profil -> {
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }
+
+            R.id.feculent -> {
+                val intent = Intent(this, SingleProductActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            }
+        }
+
     }
 
     private fun readInDatabase() {

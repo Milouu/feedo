@@ -6,13 +6,23 @@ import com.google.gson.annotations.SerializedName;
 
 public class Product {
 
-
+    @SerializedName("image_url")
+    @Expose
+    private String image_url;
     @SerializedName("generic_name_fr")
     @Expose
     private String generic_name_fr;
-    @SerializedName(" nutriments")
+    @SerializedName("nutriments")
     @Expose
     private Nutriments nutriments;
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
 
     public String getGeneric_name_fr() {
         return generic_name_fr;

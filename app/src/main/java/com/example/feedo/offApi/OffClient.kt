@@ -18,7 +18,7 @@ class OffClient {
 
     init {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://fr.openfoodfacts.org/api/v0/produit/")
+            .baseUrl("https://world.openfoodfacts.org/cgi/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

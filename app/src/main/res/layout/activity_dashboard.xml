@@ -66,7 +66,8 @@
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:paddingRight="25dp"
-                        android:paddingLeft="0dp">
+                        android:paddingLeft="0dp"
+                        android:id="@+id/feculent">
 
                     <ImageView
                             android:layout_width="match_parent"
