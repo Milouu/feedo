@@ -4,6 +4,9 @@ import com.example.feedo.modelApi.Nutriments;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Product {
 
     @SerializedName("image_url")
@@ -15,6 +18,9 @@ public class Product {
     @SerializedName("nutriments")
     @Expose
     private Nutriments nutriments;
+    @SerializedName("brands_tags")
+    @Expose
+    private List<String> brands = new ArrayList<String>();
 
     public String getImage_url() {
         return image_url;
@@ -38,5 +44,13 @@ public class Product {
 
     public void setNutriments(Nutriments nutriments) {
         this.nutriments = nutriments;
+    }
+
+    public List<String> getBrands() {
+        return brands;
+    }
+
+    public void setBrands(List<String> brands) {
+        this.brands = brands;
     }
 }
